@@ -17,7 +17,9 @@ defmodule EncoreWeb.Router do
   scope "/", EncoreWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", PageController, :index
+    get "/apply", RecruitmentController, :apply
+    get "/recruitment", RecruitmentController, :index
   end
 
   # Other scopes may use custom stacks.

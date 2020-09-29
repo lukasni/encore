@@ -1,4 +1,4 @@
-<header class="bg-brand-600 sm:flex items-center justify-between" x-data="{ isOpen: false }" @keydown.escape="isOpen = false">
+<header class="bg-brand-900 sm:flex items-center justify-between" x-data="{ isOpen: false }" @keydown.escape="isOpen = false">
     <div class="flex items-center justify-between px-4 py-2">
         <div class="flex items-center text-white">
             <svg class="h-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
@@ -29,9 +29,27 @@
             <a href="#" class="block my-1 px-3 py-1 font-semibold text-white rounded hover:bg-brand-700">Services</a>
             <a href="#" class="block my-1 px-3 py-1 font-semibold text-white rounded hover:bg-brand-700">About</a>
             <a href="#" class="block my-1 px-3 py-1 font-semibold text-white rounded hover:bg-brand-700">Links</a>
+            <%= if @current_user do %>
+            <div class="hidden sm:block sm:ml-4">
+                <%= render("account_dropdown.html", assigns) %>
+            </div>
+            <% else %>
+            <%= live_redirect "Sign in", to: Routes.auth_path(@conn, :login), class: "block my-1 px-3 py-1 text-gray-400 rounded hover:bg-brand-700" %>
+            <% end %>
         </div>
-        <div class="sm:border-none border-t border-gray-600 px-2 py-1">
-            <a class="block my-1 px-3 py-1 text-gray-400 rounded hover:bg-brand-700" href="#">Sign in</a>
+        <div class="px-4 py-5 border-t border-brand-800 sm:hidden">
+            <%= if @current_user do %>
+            <div class="flex items-center">
+                <img class="h-8 w-8 rounded-full object-cover border-2 border-brand-600" src="<%= @current_user.avatar %>" alt="Avatar">
+                <span class="ml-3 font-semibold text-white"><%= @current_user.name %></span>
+            </div>
+            <div class="mt-4">
+                <a href="#" class="block text-gray-400 hover:text-white">Account settings</a>
+                <a href="#" class="mt-2 block text-gray-400 hover:text-white">Sign out</a>
+            </div>
+            <% else %>
+            <%= live_redirect "Sign in", to: Routes.auth_path(@conn, :login), class: "block my-1 px-3 py-1 text-gray-400 rounded hover:bg-brand-700" %>
+            <% end %>
         </div>
     </nav>
 </header>

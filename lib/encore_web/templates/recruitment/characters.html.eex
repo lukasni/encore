@@ -1,0 +1,22 @@
+<div class="container sm:px-5 mx-auto">
+    <h1 class="mt-4 sm:mt-6 px-4 text-2xl">
+      <%= link "My Application", to: Routes.recruitment_path(@conn, :my_application), class: "text-brand-700" %> -
+      Characters</h1>
+
+    <%= for character <- @characters do %>
+      <div class="m-4 p-3 rounded-md bg-white border-gray-500 border flex items-center">
+        <img src="https://images.evetech.net/characters/<%= character.id %>/portrait?size=256" alt="Portrait" class="h-12 rounded-full">
+        <h4 class="font-semibold ml-4 text-lg"><%= character.name %></h4>
+      </div>
+    <% end %>
+
+    <div class="m-4 sm:mt-6">
+    <%= if length(@characters) >= 1 do %>
+      <p>You can continue adding characters until all your alts are linked.</p>
+      <a href="#" class="mt-4 btn btn-primary">Add Character</a>
+    <% else %>
+      <p>No tokens added yet. Start by logging in again with your main to grant us permission to read data about the character.</p>
+      <a href="#" class="mt-4 btn btn-primary">Add Main</a>
+    <% end %>
+    </div>
+</div>

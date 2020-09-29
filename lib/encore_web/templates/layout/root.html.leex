@@ -10,7 +10,7 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <div class="bg-gray-100 min-h-screen">
+    <div class="bg-gray-100 text-gray-800 min-h-screen overflow-hidden">
       <%= render "navigation.html", assigns %>
       <%= @inner_content %>
     </div>

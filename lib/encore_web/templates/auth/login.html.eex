@@ -1,0 +1,12 @@
+<div class="min-h-screen -mt-16 flex flex-col items-center justify-center">
+    <svg class="h-48 text-brand-900 fill-current block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+        <path d="M90 0C40.366 0 0 40.366 0 90c0 49.635 40.366 90 90 90 24.817 0 47.317-10.092 63.612-26.387l-8.431-8.432C131.073 159.287 111.574 168 90 168 46.85 168 12 133.148 12 90 12 46.85 46.85 12 90 12c21.575 0 41.075 8.713 55.181 22.82l8.432-8.432C137.318 10.092 114.818 0 90 0z"/>
+        <path class="opacity-50" d="M90 24c-36.38 0-66 29.62-66 66 0 36.38 29.62 66 66 66 36.38 0 66-29.62 66-66 0-36.38-29.62-66-66-66zm0 12c29.894 0 54 24.106 54 54s-24.106 54-54 54-54-24.106-54-54 24.106-54 54-54z"/>
+        <path d="M90 48c-23.125 0-42 18.875-42 42s18.875 42 42 42c15.49 0 29.072-8.47 36.352-21.011l-10.343-5.972C110.84 113.992 101.158 120 90 120a29.9 29.9 0 01-29.406-24h70.974a42 42 0 00.432-6c0-23.125-18.875-42-42-42zm0 12a29.9 29.9 0 0129.406 24H60.594A29.9 29.9 0 0190 60z"/>
+        <path d="M47.926 48v84h12V48z" />
+    </svg>
+    <h1 class="text-brand-900 font-semibold text-5xl mt-4">nCore</h1>
+    <a class="mt-12" href="#">
+        <img src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-large.png" alt="Log in with EVE Online">
+    </a>
+</div>

@@ -35,4 +35,96 @@ defmodule Encore.Recruitment do
       }
     ]
   end
+
+  def get_file(:example) do
+    %{
+      status: :draft,
+      characters: [
+        %{
+          id: 93971307,
+          name: "Catherine Solenne"
+        },
+        %{
+          id: 93934910,
+          name: "Bartimaeus Fry"
+        },
+        %{
+          id: 94267682,
+          name: "John S Isayeki"
+        }
+      ]
+    }
+  end
+
+  def get_questionnaire() do
+    [
+      %{
+        section: "Timezones, Expectations, Addictions",
+        questions: [
+          %{
+            question: "In what timezones do you play?",
+            type: {:checkbox, ["AUTZ", "EUTZ", "RUTZ", "USTZ"]}
+          },
+          %{
+            question: "Briefly describe why you've chosen to apply to No Vacancies and what you expect from the corporation",
+            type: :text,
+          },
+          %{
+            question: "How would you class your addiction to EVE?",
+            type: :text
+          },
+          %{
+            question: "Describe your recent corporate history, explain any short stays or gaps.",
+            type: :text
+          }
+        ]
+      },
+      %{
+        section: "Skills and Experience",
+        questions: [
+          %{
+            question: "Do you meet our minimum skill requirements? (If no, what are you missing?) Please note by end of trial, you will need to meet skill requirements for full membership.",
+            type: :text
+          },
+          %{
+            question: "Describe your PvP experience. Link a kill that you are proud of or that we might find interesting.",
+            type: :text
+          },
+          %{
+            question: "Describe your experience with wormholes.",
+            type: :text
+          },
+          %{
+            question: "How do you intend to fund your pvp?",
+            type: :text
+          }
+        ]
+      },
+      %{
+        section: "FC, what do?",
+        questions: [
+          %{
+            question: "You Jump into a fresh static and see 2 Naglfars and an MTU on scan. What is your course of action?",
+            type: :text
+          },
+          %{
+            question: "You are hunting in NS with a sabre and manage to land on a carrier. What do you do to ensure the carrier stays tackled as long as possible before backup arrives?",
+            type: :text
+          },
+          %{
+            question: "You are flying a guardian and your cap chain is almost breaking. The FC broadcasts for cap. What do you do?",
+            type: :text
+          },
+          %{
+            question: "Create or Link a fit for a Heavy Armor, Short-Range fleet ship to be used in a Wormhole brawl, and explain why it would be effective. (Test yourself and do not simply copy pasta)",
+            type: :text
+          },
+        ]
+      }
+    ]
+  end
+
+  def get_characters(:example) do
+
+  end
 end

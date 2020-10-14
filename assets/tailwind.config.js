@@ -28,7 +28,13 @@ module.exports = {
         }
       },
     },
-    variants: {},
+    variants: {
+      backgroundColor: ({ after }) => after(['active']),
+      textColor: ({ after }) => after(['active'])
+    },
     plugins: [],
+    experimental: {
+      applyComplexClasses: true
+    }
   }
   

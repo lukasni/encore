@@ -1,9 +1,9 @@
 
-<div class="container sm:px-5 mx-auto flex flex-wrap">
+<div class="container sm:px-5 mx-auto">
     <h1 class="mt-2 sm:mt-4 px-4 py-2 text-2xl">Member Services</h1>
 
-    <div class="flex flex-wrap p-2 items-stretch w-full">
-        <div class="w-full sm:w-1/2 lg:w-1/3 p-2 relative">
+    <div class="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="p-2 relative">
             <div class="p-4 flex flex-col sm:h-full border rounded-md bg-white">
                 <h4 class="text-lg flex items-center">
                 <svg class="h-10 w-10 block rounded-full bg-brand-600 stroke-current text-white p-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,7 +19,7 @@
                 <span class="inline-block h-6 w-6 text-center text-white absolute right-0 top-0 rounded-full bg-red-600">4</span>
             </div>
         </div>
-        <div class="w-full sm:w-1/2 lg:w-1/3 p-2 relative">
+        <div class="p-2 relative">
             <div class="p-4 flex flex-col sm:h-full border rounded-md bg-white">
                 <h4 class="text-lg flex items-center">
                 <svg class="h-10 w-10 block rounded-full bg-brand-600 stroke-current text-white p-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -34,7 +34,7 @@
                 </a>
             </div>
         </div>
-        <div class="w-full sm:w-1/2 lg:w-1/3 p-2 relative">
+        <div class="p-2 relative">
             <div class="p-4 flex flex-col sm:h-full border rounded-md bg-white">
                 <h4 class="text-lg flex items-center">
                 <svg class="h-10 w-10 block rounded-full bg-brand-600 stroke-current text-white p-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,7 +49,7 @@
                 </a>
             </div>
         </div>
-        <div class="w-full sm:w-1/2 lg:w-1/3 p-2 relative">
+        <div class="p-2 relative">
             <div class="p-4 flex flex-col sm:h-full border rounded-md bg-white">
                 <h4 class="text-lg flex items-center">
                 <svg class="h-10 w-10 block rounded-full bg-brand-600 stroke-current text-white p-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

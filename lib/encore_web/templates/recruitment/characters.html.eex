@@ -3,17 +3,34 @@
       <%= link "My Application", to: Routes.recruitment_path(@conn, :my_application), class: "text-brand-700" %> -
       Characters</h1>
 
+    <%= if length(@characters) > 0 do %>
+    <div class="mt-4 sm:mt-6 px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <%= for character <- @characters do %>
-      <div class="m-4 p-3 rounded-md bg-white border-gray-500 border flex items-center">
+      <div class="p-3 rounded-md bg-white border-gray-500 border flex items-center">
         <img src="https://images.evetech.net/characters/<%= character.id %>/portrait?size=256" alt="Portrait" class="h-12 rounded-full">
-        <h4 class="font-semibold ml-4 text-lg"><%= character.name %></h4>
+        <div class="ml-4 flex-grow">
+          <h2 class="text-gray-900 font-medium">
+            <%= character.name %>
+            <%= if character.is_main do %>
+              <span class="ml-2 inline-block rounded-full bg-brand-500 text-white px-2 text-sm">main</span>
+            <% end %>
+          </h2>
+          <p class="text-gray-500 text-sm">
+            <%= character.corporation.name %>
+            <%= if character.corporation[:alliance][:name] do %>
+              / <%= character.corporation.alliance.name %>
+            <% end %>
+          </p>
+        </div>
       </div>
+    <% end %>
+    </div>
     <% end %>
 
     <div class="m-4 sm:mt-6">
     <%= if length(@characters) >= 1 do %>
-      <p>You can continue adding characters until all your alts are linked.</p>
-      <a href="#" class="mt-4 btn btn-primary">Add Character</a>
+      <a href="#" class="btn btn-primary">Add Character</a>
+      <p class="mt-4">You can continue adding characters until all your alts are linked.</p>
     <% else %>
       <p>No tokens added yet. Start by logging in again with your main to grant us permission to read data about the character.</p>
       <a href="#" class="mt-4 btn btn-primary">Add Main</a>

@@ -42,15 +42,33 @@ defmodule Encore.Recruitment do
       characters: [
         %{
           id: 93971307,
-          name: "Catherine Solenne"
+          name: "Catherine Solenne",
+          is_main: true,
+          corporation: %{
+            name: "No Vacancies",
+            alliance: %{
+              name: "Wardec Mechanics"
+            }
+          }
         },
         %{
           id: 93934910,
-          name: "Bartimaeus Fry"
+          name: "Bartimaeus Fry",
+          is_main: false,
+          corporation: %{
+            name: "No Vacancies",
+            alliance: %{
+              name: "Wardec Mechanics"
+            }
+          }
         },
         %{
           id: 94267682,
-          name: "John S Isayeki"
+          is_main: false,
+          name: "John S Isayeki",
+          corporation: %{
+            name: "No Haulers"
+          }
         }
       ]
     }

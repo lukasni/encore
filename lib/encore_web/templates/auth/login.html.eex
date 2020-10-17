@@ -6,7 +6,7 @@
         <path d="M47.926 48v84h12V48z" />
     </svg>
     <h1 class="text-brand-900 font-semibold text-5xl mt-4">nCore</h1>
-    <a class="mt-12" href="#">
+    <a class="mt-12" href="<%= @uri %>">
         <img src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-large.png" alt="Log in with EVE Online">
     </a>
 </div>

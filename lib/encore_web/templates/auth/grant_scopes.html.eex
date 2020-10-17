@@ -1,0 +1,85 @@
+<div class="flex flex-col items-center justify-center">
+    <h1 class="text-brand-900 text-2xl mt-10">Grant Permissions</h1>
+
+
+    <form class="max-w-xl w-full mt-12 flex flex-col items-center justify-center">
+    <button class="block" type="submit">
+        <img src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-large.png" alt="Log in with EVE Online">
+    </button>
+
+    <div class="mt-10 w-full" x-data="{ tab: 'optional'}">
+        <ul class="flex mb-4">
+            <li class="flex-1 py-2 px-4 text-center border-brand-600"
+                :class="{ 'border-b-2': tab === 'optional' }"
+                @click="tab = 'optional'">
+                Optional Scopes
+            </li>
+            <li class="flex-1 py-2 px-4 text-center border-brand-600"
+                :class="{ 'border-b-2': tab === 'required' }"
+                @click="tab = 'required'">
+                Required Scopes
+            </li>
+        </ul>
+        <div x-show="tab === 'optional'">
+            <%# <label for="check-all" class="mx-4 text-lg">
+                <input type="checkbox" name="check-all" id="check-all" checked>
+                Grant all optional scopes
+            </label> %>
+            <div class="border rounded mt-2 bg-white">
+                <%= for scope <- @scopes, scope.required == false do %>
+                <div x-data="{ isOpen: false }">
+                    <div @click="isOpen=!isOpen" class="flex items-center justify-between px-4 py-2 border-b border-brand-700 hover:bg-brand-700 bg-brand-800 text-white">
+                        <label for="<%= scope.scope %>" @click.stop class="cursor-pointer">
+                            <input type="checkbox" name="scopes[]" id="<%= scope.scope %>" value="<%= scope.scope %>" <%= if scope.scope in @selected, do: "checked" %>>
+                            <%= scope.title %>
+                            <p class="text-sm text-gray-500"><%= scope.scope %></p>
+                        </label>
+                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path x-show="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <path x-show="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </div>
+                    <div x-show="isOpen">
+                        <p class="px-4 py-2">
+                            <%= scope.capability %>
+                        </p>
+                        <p class="px-4 py-2 border-b">
+                            <%= scope.usage %>
+                        </p>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div x-show="tab === 'required'">
+            <div class="border rounded mt-2 bg-white">
+                <input type="hidden" name="scopes[]" value="none">
+                <%= for scope <- @scopes, scope.required do %>
+                <div x-data="{ isOpen: false }">
+                    <div @click="isOpen=!isOpen" class="flex items-center justify-between px-4 py-2 border-b border-brand-700 hover:bg-brand-700 bg-brand-800 text-white">
+                        <label for="<%= scope.scope %>" @click.stop class="cursor-pointer">
+                            <input type="checkbox" id="<%= scope.scope %>" checked disabled>
+                            <%= scope.title %>
+                            <p class="text-sm text-gray-500"><%= scope.scope %></p>
+                        </label>
+                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path x-show="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <path x-show="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                    </div>
+                    <div x-show="isOpen">
+                        <p class="px-4 py-2">
+                            <%= scope.capability %>
+                        </p>
+                        <p class="px-4 py-2 border-b">
+                            <%= scope.usage %>
+                        </p>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>

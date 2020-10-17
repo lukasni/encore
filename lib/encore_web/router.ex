@@ -8,7 +8,7 @@ defmodule EncoreWeb.Router do
     plug :put_root_layout, {EncoreWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_auth
+    plug EncoreWeb.Plugs.Auth
   end
 
   pipeline :api do
@@ -24,14 +24,16 @@ defmodule EncoreWeb.Router do
     get "/my_application", RecruitmentController, :my_application
     get "/my_application/questionnaire", RecruitmentController, :questionnaire
     get "/my_application/characters", RecruitmentController, :characters
-    get "/login", AuthController, :login
+    get "/auth/evesso/callback", AuthController, :callback
     get "/dashboard", PageController, :dashboard
   end
 
-  def put_auth(conn, _opts) do
-    conn
-    #|> Plug.Conn.assign(:current_user, nil)
-    |> Plug.Conn.assign(:current_user, %{name: "Catherine Solenne", avatar: "https://images.evetech.net/characters/93971307/portrait?size=512"})
+  scope "/auth", EncoreWeb do
+    pipe_through :browser
+
+    get "/login", AuthController, :login
+    get "/grant", AuthController, :grant_scopes
+    get "/auth/evesso/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.

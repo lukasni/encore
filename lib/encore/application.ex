@@ -19,6 +19,8 @@ defmodule Encore.Application do
       # {Encore.Worker, arg}
     ]
 
+    :ets.new(:session, [:named_table, :public, read_concurrency: true])
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Encore.Supervisor]

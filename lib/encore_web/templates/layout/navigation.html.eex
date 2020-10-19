@@ -13,7 +13,9 @@
                 <path d="M5.455 10.91v2.18h13.09v-2.18z" />
                 <path d="M4.364 4.364v15.272h2.181V4.364z" />
             </svg> %>
-            <h1 class="ml-2 font-semibold">nCore</h1>
+            <h1 class="ml-2 font-semibold">
+                <%= link "nCore", to: Routes.page_path(@conn, :index) %>
+            </h1>
         </div>
         <div class="sm:hidden">
             <button @click="isOpen = !isOpen" type="button" class="block text-gray-300 hover:text-white focus:text-white focus:outline-none">
@@ -26,9 +28,11 @@
     </div>
     <nav class="sm:flex items-center":class="{ 'block': isOpen, 'hidden': !isOpen }" @click.away="isOpen = false">
         <div class="px-2 py-1 sm:flex items-center">
+            <%#
             <a href="#" class="block my-1 px-3 py-1 font-semibold text-white rounded hover:bg-brand-700">Services</a>
             <a href="#" class="block my-1 px-3 py-1 font-semibold text-white rounded hover:bg-brand-700">About</a>
             <a href="#" class="block my-1 px-3 py-1 font-semibold text-white rounded hover:bg-brand-700">Links</a>
+            %>
             <%= if @current_user do %>
             <div class="hidden sm:block sm:ml-4">
                 <%= render("account_dropdown.html", assigns) %>

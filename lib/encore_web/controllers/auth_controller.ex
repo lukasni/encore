@@ -21,6 +21,12 @@ defmodule EncoreWeb.AuthController do
     |> redirect(to: Routes.page_path(conn, :index))
   end
 
+  def grant_scopes(%{assigns: %{current_user: nil}} = conn, _params) do
+    conn
+    |> put_flash(:info, "You need to sign in before granting permissions")
+    |> redirect(to: Routes.auth_path(conn, :login))
+  end
+
   def grant_scopes(conn, %{"scopes" => scopes}) do
     selected_scopes = MapSet.new(scopes)
     auth_scopes =

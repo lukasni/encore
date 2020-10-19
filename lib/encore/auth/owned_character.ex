@@ -1,11 +1,11 @@
-defmodule Encore.OwnedCharacter do
+defmodule Encore.Auth.OwnedCharacter do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:owner_hash, :string, []}
   schema "owned_characters" do
-    field :owner_hash, :string
-    field :user_id, :id
-    field :character_id, :id
+    belongs_to :user, Encore.Auth.User, type: :binary_id
+    belongs_to :character, EVE.Characters.Character
 
     timestamps()
   end

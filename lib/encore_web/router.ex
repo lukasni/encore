@@ -53,7 +53,7 @@ defmodule EncoreWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/live_dashboard", metrics: EncoreWeb.Telemetry
+      live_dashboard "/live_dashboard", metrics: EncoreWeb.Telemetry, ecto_repos: [Encore.Repo]
     end
   end
 end

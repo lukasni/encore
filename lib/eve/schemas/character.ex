@@ -1,4 +1,4 @@
-defmodule Encore.Character do
+defmodule EVE.Characters.Character do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -13,7 +13,7 @@ defmodule Encore.Character do
   @doc false
   def changeset(character, attrs) do
     character
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:id, :name])
+    |> validate_required([:id, :name])
   end
 end

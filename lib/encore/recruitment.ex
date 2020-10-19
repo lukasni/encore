@@ -15,8 +15,8 @@ defmodule Encore.Recruitment do
       },
       %{
         index: 3,
-        title: "Add alts",
-        description: "Add all your alts to your account. This is required for the recruitment team to vet your application. You will be able to review all data that is visible to recruiters before publishing the application"
+        title: "Grant permissions",
+        description: "Add EVE SSO scopes for your main and all your alts to your account. This is required for the recruitment team to vet your application. You will be able to review all data that is visible to recruiters before publishing the application"
       },
       %{
         index: 4,

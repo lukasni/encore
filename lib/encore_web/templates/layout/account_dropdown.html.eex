@@ -1,6 +1,6 @@
 <div class="relative" x-data="{ isOpen: false }" @keydown.escape="isOpen = false">
     <button @click="isOpen = !isOpen" class="block h-8 w-8 rounded-full overflow-hidden border-2 border-brand-600 focus:outline-none focus:border-white">
-        <img class="h-full w-full object-cover" src="<%= @current_user.avatar %>" alt="Avatar">
+        <img class="h-full w-full object-cover" src="<%= ImageServer.portrait(@current_user.main_character) %>" alt="Avatar">
     </button>
     <div :class="{'hidden': !isOpen, 'block': isOpen}" @click.away="isOpen = false" class="absolute right-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-xl">
         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Account settings</a>

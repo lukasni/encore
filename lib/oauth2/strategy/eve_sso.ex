@@ -37,8 +37,9 @@ defmodule OAuth2.Strategy.EveSso do
     with [_ | [body | _]] <- token.access_token |> String.split("."),
          {:ok, json_string} <- Base.decode64(body, padding: false),
          {:ok, decoded} <- @json_library.decode(json_string),
-         [_, _, id] <- String.split(decoded["sub"], ":") do
-      {:ok, Map.put(decoded, "character_id", id)}
+         [_, _, id] <- String.split(decoded["sub"], ":"),
+         int_id <- String.to_integer(id) do
+      {:ok, Map.put(decoded, "character_id", int_id)}
     else
       {:error, json_error} -> {:error, json_error}
       :error -> {:error, "failed to decode base64"}

@@ -40,8 +40,8 @@
         <div class="px-4 py-5 border-t border-brand-800 sm:hidden">
             <%= if @current_user do %>
             <div class="flex items-center">
-                <img class="h-8 w-8 rounded-full object-cover border-2 border-brand-600" src="<%= @current_user.avatar %>" alt="Avatar">
-                <span class="ml-3 font-semibold text-white"><%= @current_user.name %></span>
+                <img class="h-8 w-8 rounded-full object-cover border-2 border-brand-600" src="<%= ImageServer.portrait(@current_user.main_character) %>" alt="Avatar">
+                <span class="ml-3 font-semibold text-white"><%= @current_user.main_character.name %></span>
             </div>
             <div class="mt-4">
                 <a href="#" class="block text-gray-400 hover:text-white">Account settings</a>

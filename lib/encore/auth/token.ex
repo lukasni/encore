@@ -1,4 +1,4 @@
-defmodule Encore.Token do
+defmodule Encore.Auth.Token do
   use Ecto.Schema
   import Ecto.Changeset
 

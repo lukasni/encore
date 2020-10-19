@@ -89,6 +89,7 @@ defmodule EncoreWeb do
 
       import EncoreWeb.ErrorHelpers
       import EncoreWeb.Gettext
+      alias EncoreWeb.ImageServer
       alias EncoreWeb.Router.Helpers, as: Routes
     end
   end

@@ -5,9 +5,9 @@ defmodule EncoreWeb.Endpoint do
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
-    store: :ets,
-    key: "sid",
-    table: :session
+    store: :cookie,
+    key: "_encore_key",
+    signing_salt: "VV8T0zpH"
   ]
 
   socket "/socket", EncoreWeb.UserSocket,

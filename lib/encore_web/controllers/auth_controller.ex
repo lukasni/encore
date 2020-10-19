@@ -1,19 +1,17 @@
 defmodule EncoreWeb.AuthController do
   use EncoreWeb, :controller
 
-  alias Encore.SSO
-  alias EncoreWeb.Plugs.Auth
+  alias Encore.{SSO, Auth}
+  alias Encore.Auth.User
 
   def login(conn, _params) do
-    nonce = SSO.generate_nonce()
+    {:ok, attempt} = Auth.create_login_attempt(:login)
     uri =
       SSO.authorize_url!(
-        state: nonce
+        state: attempt.id
       )
 
     conn
-    |> put_session(:sso_state, nonce)
-    |> put_session(:sso_action, :login)
     |> render("login.html", uri: uri)
   end
 
@@ -26,16 +24,14 @@ defmodule EncoreWeb.AuthController do
       |> MapSet.union(selected_scopes)
       |> MapSet.delete("none")
 
-    nonce = SSO.generate_nonce()
+    {:ok, attempt} = Auth.create_login_attempt({:grant, auth_scopes})
     uri = SSO.authorize_url!(
-      state: nonce,
+      state: attempt.id,
       scope: Enum.join(auth_scopes, " ")
     )
 
     conn
     |> put_session(:scope_selection, scopes)
-    |> put_session(:sso_state, nonce)
-    |> put_session(:sso_action, {:grant, auth_scopes})
     |> put_flash(:info, "Logging in with scopes #{inspect auth_scopes}")
     |> redirect(external: uri)
   end
@@ -49,47 +45,36 @@ defmodule EncoreWeb.AuthController do
     scope_selection = get_session(conn, :scope_selection) || Enum.map(scopes, & &1[:scope])
 
     conn
-    |> put_flash(:info, "#{inspect get_session(conn)}")
     |> render("grant_scopes.html", scopes: scopes, selected: scope_selection)
   end
 
   def callback(conn, %{"code" => code, "state" => state}) do
-    with {:ok, _state} <- verify_nonce(conn, state),
+    with attempt <- Auth.get_login_attempt!(state),
          {:ok, client} <- SSO.get_token(code: code) do
-      handle_callback(conn, client)
+      handle_callback(conn, attempt, client)
     end
   end
 
-  defp handle_callback(conn, oauth2_client) do
-    case get_session(conn, :sso_action) do
-      :login ->
+  def handle_callback(conn, %{type: "login"} = attempt, client) do
+    Auth.delete_login_attempt(attempt)
+    conn
+    |> EncoreWeb.Plugs.Auth.do_login(client)
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
+
+  def handle_callback(%{assigns: %{user: %User{} = _user}} = conn, %{type: "grant", scopes: scopes} = attempt, client) do
+    Auth.delete_login_attempt(attempt)
+
+    case SSO.verify(client, scopes) do
+      {:ok, _verified} ->
         conn
-        |> Auth.clean_session()
-        |> Auth.do_login(oauth2_client)
+        |> put_flash(:info, "Successfully authorized scopes #{inspect scopes}")
         |> redirect(to: Routes.page_path(conn, :index))
 
-      {:grant, scopes} ->
-        case SSO.verify(scopes, oauth2_client) do
-          {:ok, _verified} ->
-            conn
-            |> Auth.clean_session()
-            |> put_flash(:info, "Successfully authorized scopes #{inspect scopes}")
-            |> redirect(to: Routes.page_path(conn, :index))
-
-          {:error, _} ->
-            conn
-            |> Auth.clean_session()
-            |> put_flash(:info, "Granted scopes don't match expected set.")
-            |> redirect(to: Routes.auth_path(conn, :grant_scopes))
-        end
-    end
-  end
-
-  defp verify_nonce(conn, state) do
-    if get_session(conn, :sso_state) == state do
-      {:ok, state}
-    else
-      {:error, :invalid_state}
+      {:error, _} ->
+        conn
+        |> put_flash(:info, "Granted scopes don't match expected set.")
+        |> redirect(to: Routes.auth_path(conn, :grant_scopes))
     end
   end
 end

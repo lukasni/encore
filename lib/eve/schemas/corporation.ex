@@ -1,4 +1,4 @@
-defmodule Encore.Corporation do
+defmodule EVE.Alliances.Corporation do
   use Ecto.Schema
   import Ecto.Changeset
 

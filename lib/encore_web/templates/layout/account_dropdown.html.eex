@@ -4,6 +4,6 @@
     </button>
     <div :class="{'hidden': !isOpen, 'block': isOpen}" @click.away="isOpen = false" class="absolute right-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-xl">
         <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Account settings</a>
-        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">Sign out</a>
+                <%= link "Sign out", to: Routes.auth_path(@conn, :logout), method: :delete, class: "block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" %>
     </div>
 </div>

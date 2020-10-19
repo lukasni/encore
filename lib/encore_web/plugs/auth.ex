@@ -33,4 +33,10 @@ defmodule EncoreWeb.Plugs.Auth do
         |> Phoenix.Controller.put_flash(:error, "Error logging in: #{inspect error}")
     end
   end
+
+  def do_logout(conn) do
+    conn
+    |> Plug.Conn.assign(:current_user, nil)
+    |> Plug.Conn.configure_session(drop: true)
+  end
 end

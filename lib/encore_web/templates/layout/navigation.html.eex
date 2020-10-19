@@ -44,8 +44,8 @@
                 <span class="ml-3 font-semibold text-white"><%= @current_user.main_character.name %></span>
             </div>
             <div class="mt-4">
-                <a href="#" class="block text-gray-400 hover:text-white">Account settings</a>
-                <a href="#" class="mt-2 block text-gray-400 hover:text-white">Sign out</a>
+                <a href="" class="block text-gray-400 hover:text-white">Account settings</a>
+                <%= link "Sign out", to: Routes.auth_path(@conn, :logout), method: :delete, class: "block text-gray-400 hover:text-white" %>
             </div>
             <% else %>
             <%= live_redirect "Sign in", to: Routes.auth_path(@conn, :login), class: "block my-1 px-3 py-1 text-gray-400 rounded hover:bg-brand-700" %>

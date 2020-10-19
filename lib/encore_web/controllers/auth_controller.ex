@@ -15,6 +15,12 @@ defmodule EncoreWeb.AuthController do
     |> render("login.html", uri: uri)
   end
 
+  def logout(conn, _params) do
+    conn
+    |> EncoreWeb.Plugs.Auth.do_logout()
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
+
   def grant_scopes(conn, %{"scopes" => scopes}) do
     selected_scopes = MapSet.new(scopes)
     auth_scopes =

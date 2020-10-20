@@ -31,9 +31,9 @@ defmodule EncoreWeb.Router do
   scope "/auth", EncoreWeb do
     pipe_through :browser
 
-    get "/login", AuthController, :login
-    delete "/logout", AuthController, :logout
-    get "/profile", AuthController, :profile
+    get "/login", AuthController, :new
+    delete "/logout", AuthController, :delete
+    get "/profile", UserController, :show
     get "/grant", AuthController, :grant_scopes
     get "/auth/evesso/callback", AuthController, :callback
   end

@@ -16,7 +16,9 @@ defmodule EncoreWeb.Plugs.Auth do
         Plug.Conn.assign(conn, :current_user, user)
 
       true ->
-        Plug.Conn.assign(conn, :current_user, nil)
+        conn
+        |> Plug.Conn.assign(:current_user, nil)
+        |> Plug.Conn.delete_session(:user_id)
     end
   end
 

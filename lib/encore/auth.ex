@@ -79,4 +79,62 @@ defmodule Encore.Auth do
     }
     |> Repo.insert()
   end
+
+  def get_owned_characters(user) do
+    from(
+      oc in OwnedCharacter,
+      join: c in assoc(oc, :character),
+      where: oc.user_id == ^user.id,
+      preload: [character: c]
+    )
+    |> Repo.all()
+  end
+
+  def add_grant_for_user(user, client, verify) do
+    character =
+      case EVE.Characters.get_character(verify["character_id"]) do
+        nil ->
+          {:ok, character} = EVE.Characters.create_character(%{id: verify["character_id"], name: verify["name"]})
+          character
+
+        character ->
+          character
+      end
+
+    changes =
+      case Repo.get(OwnedCharacter, verify["owner"]) do
+        nil ->
+          # create new grant
+          user
+          |> Ecto.build_assoc(:owned_characters)
+          |> OwnedCharacter.changeset(
+            %{
+              owner_hash: verify["owner"],
+              refresh_token: client.token.refresh_token,
+              scopes: verify["scp"],
+              character_id: character.id
+            }
+          )
+
+        %OwnedCharacter{} = oc ->
+          # update existing grant with new scopes
+          oc
+          |> OwnedCharacter.changeset(%{
+            refresh_token: client.token.refresh_token,
+            #client_id: client.client_id,
+            #client_secret: client.client_secret,
+            scopes: merge_scopes(oc, verify["scp"])
+          })
+      end
+
+    Repo.insert_or_update(changes)
+  end
+
+  def merge_scopes(owned_character, new_scopes) when is_list(new_scopes) do
+    merge_scopes(owned_character, MapSet.new(new_scopes))
+  end
+
+  def merge_scopes(owned_character, %MapSet{} = new_scopes) do
+    MapSet.union(owned_character.scopes, new_scopes)
+  end
 end

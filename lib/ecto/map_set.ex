@@ -36,6 +36,10 @@ defmodule Ecto.MapSet do
     {:ok, MapSet.new(data)}
   end
 
+  def load(nil, _, _) do
+    {:ok, MapSet.new()}
+  end
+
   def dump(%MapSet{} = map_set, _, _), do: {:ok, MapSet.to_list(map_set)}
   def dump(_, _, _), do: :error
 end

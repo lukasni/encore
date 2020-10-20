@@ -7,6 +7,11 @@ defmodule Encore.Repo.Migrations.CreateOwnedCharacters do
       add :user_id, references(:users, on_delete: :delete_all, type: :binary_id)
       add :character_id, references(:characters, on_delete: :nilify_all)
 
+      add :client_id, :string
+      add :client_secret, :string
+      add :refresh_token, :string
+      add :scopes, {:array, :string}
+
       timestamps()
     end
 

@@ -1,0 +1,4 @@
+<%= for %{character: character} = _oc <- @characters do %>
+  <img class="rounded-full h-10" src="<%= ImageServer.portrait(character) %>" alt="Portrait">
+  <%= character.name %>
+<% end %>

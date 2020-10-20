@@ -5,7 +5,11 @@
       <p class="mb-8 leading-relaxed">Recruitment and Authentication tools for No Vacancies.</p>
       <div class="flex justify-center">
         <a class="inline-flex btn btn-primary" href="<%= Routes.recruitment_path(@conn, :apply) %>">How to apply</a>
-        <a class="ml-4 inline-flex btn btn-gray" href="<%= Routes.auth_path(@conn, :login) %>">Sign In</a>
+        <%= if @current_user == nil do %>
+          <%= link "Sign in", to: Routes.auth_path(@conn, :new), class: "ml-4 inline-flex btn btn-gray" %>
+        <% else %>
+          <%= link "Add Character", to: Routes.auth_path(@conn, :grant_scopes), class: "ml-4 inline-flex btn btn-gray" %>
+        <% end %>
       </div>
     </div>
     <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

@@ -4,7 +4,7 @@ defmodule EncoreWeb.AuthController do
   alias Encore.{SSO, Auth}
   alias Encore.Auth.User
 
-  def login(conn, _params) do
+  def new(conn, _params) do
     {:ok, attempt} = Auth.create_login_attempt(:login)
     uri =
       SSO.authorize_url!(
@@ -15,7 +15,7 @@ defmodule EncoreWeb.AuthController do
     |> render("login.html", uri: uri)
   end
 
-  def logout(conn, _params) do
+  def delete(conn, _params) do
     conn
     |> EncoreWeb.Plugs.Auth.do_logout()
     |> redirect(to: Routes.page_path(conn, :index))
@@ -74,19 +74,23 @@ defmodule EncoreWeb.AuthController do
     |> redirect(to: Routes.page_path(conn, :index))
   end
 
-  def handle_callback(%{assigns: %{user: %User{} = _user}} = conn, %{type: "grant", scopes: scopes} = attempt, client) do
+  def handle_callback(%{assigns: %{current_user: %User{} = user}} = conn, %{type: "grant", scopes: scopes} = attempt, client) do
     Auth.delete_login_attempt(attempt)
 
-    case SSO.verify(client, scopes) do
-      {:ok, _verified} ->
+    with {:ok, verified} <- SSO.verify(client, scopes),
+         {:ok, oc} <- Auth.add_grant_for_user(user, client, verified) do
         conn
-        |> put_flash(:info, "Successfully authorized scopes #{inspect scopes}")
+        |> put_flash(:info, "Successfully authorized scopes #{inspect oc}")
         |> redirect(to: Routes.page_path(conn, :index))
-
-      {:error, _} ->
+    else
+      {:error, {:invalid_scopes, _actual}} ->
         conn
-        |> put_flash(:info, "Granted scopes don't match expected set.")
+        |> put_flash(:error, "Granted scopes don't match expected set.")
         |> redirect(to: Routes.auth_path(conn, :grant_scopes))
+
+      {:error, e} ->
+        conn
+        |> put_flash(:error, "An unexpected error occurred: #{inspect e}")
     end
   end
 end
